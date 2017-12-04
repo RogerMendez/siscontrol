@@ -1,0 +1,36 @@
+{% extends 'base_reporte.html' %}
+
+{% block cuerpo %}
+<div class="x_panel">
+	<div class="x_title" align="center">
+		<h2 class="title">ENTIDAD MUNICIPAL DE ASEO POTOSI</h2>
+		<h2 class="title">"E.M.A.P."</h2>
+		<h2 class="title">CUENTAS AUXILIARES</h2>
+		<div class="barra">.</div><br>
+		<div class="clearfix"></div>
+	</div>
+	<div class="x_content">
+
+		<div class="table-responsive">
+			<table id="tabla" class="table table-bordered table-hover ">
+				<thead style="background-color: #374a5e;">
+					<tr>
+						<th class="text-center" width="20px">N°</th>
+						<th class="text-center" width="100px">Codigo</th>
+						<th class="text-center">Descripcion</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for cat in categoria %}
+						<tr>
+							<td class="text-center">{{ forloop.counter }}</td>
+							<td class="text-center">{{ cat.cod_cat }}</td>
+							<td align="left">{{ cat.descripcion }}</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+{% endblock cuerpo %}

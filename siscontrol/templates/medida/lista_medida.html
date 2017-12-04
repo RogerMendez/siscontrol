@@ -1,0 +1,67 @@
+
+{% extends "base/base.html" %}
+
+
+{% load static %}
+{% block css %}
+	<link rel="stylesheet" type="text/css" href="{% static "web/dataTables/css/jquery.dataTables.min.css" %}">
+{% endblock css %}
+
+{% block container %}
+<div class="x_panel">
+	<div class="x_title">
+		<h2>Unidad de Medida</h2>
+		<ul class="nav navbar-right panel_toolbox">
+			{% if perms.articulo.add_tipo_medida%}
+				<a class="btn btn-success btn-sm show-form" href="{% url 'crear_medida' %}"><span class="glyphicon glyphicon-plus" ></span> Agregar U. Medida</a>
+			{% endif %}
+		</ul>
+		<div class="clearfix"></div>
+	</div>
+	<div class="x_content">
+
+		<div class="table-responsive">
+			<table id="tabla" class="table table-bordered table-hover ">
+				<thead style="background-color: #374a5e;">
+					<tr>
+						<th class="text-center" width="15px">N°</th>
+						<th class="text-center">Descripcion</th>
+						<th class="text-center" width="150px">Acciones</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for med in medidas %}
+						<tr>
+							<td class="text-center">{{ forloop.counter }}</td>
+							<td>{{ med.descripcion }}</td>
+							<td class="text-center">
+								{% if perms.articulo.change_tipo_medida %}
+									<a class="btn btn-info btn-xs" href="{% url 'modificar_medida' med.id %}"data-toggle="tooltip" data-placement="top" title="Modificar"><span class="glyphicon glyphicon-pencil" ></span></a>
+								{% endif %}
+								{% if perms.articulo.delete_tipo_medida%}
+									<a class="btn btn-danger btn-xs" href="{% url 'eliminar_medida' med.id %}" data-toggle="tooltip" data-placement="top" title="Eliminar"><span class="glyphicon glyphicon-trash" ></span></a>
+								{% endif %}
+							</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+
+{% endblock container %}
+
+{% block js %}
+	<script src="{% static "web/dataTables/js/jquery.dataTables.min.js" %}"></script>
+	<script src="{% static "web/dataTables/js/dataTables.bootstrap.min.js" %}"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			var table = $('#tabla').DataTable({
+				"language": {
+					url: "/static/web/dataTables/localizacion/es_ES.json"
+				}
+			} );
+		});
+	</script>
+{% endblock js %}

@@ -1,0 +1,74 @@
+
+{% extends "base/base.html" %}
+
+
+{% load static %}
+{% block css %}
+	<link rel="stylesheet" type="text/css" href="{% static "web/dataTables/css/jquery.dataTables.min.css" %}">
+{% endblock css %}
+
+{% block container %}
+	{% comment %}
+		{% load helper_articulo %}
+	{% endcomment %}
+<div class="x_panel">
+	<div class="x_title">
+		<h2>Salida</h2>
+		<div class="clearfix"></div>
+	</div>
+	<div class="x_content">
+
+		<div class="table-responsive">
+			<table id="tabla" class="table table-bordered table-hover ">
+				<thead style="background-color: #374a5e;">
+					<tr>
+						<th class="text-center" width="15px">N°</th>
+						<th class="text-center">Descripcion</th>
+						<th class="text-center">Cantidad</th>
+						<th class="text-center">Unidad de Medida</th>
+						<th class="text-center">Total (Bs)</th>
+						<th class="text-center">Fecha de Ingreso</th>
+						<th class="text-center">Accion</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for sal in salidas %}
+						<tr>
+							<td class="text-center">{{ forloop.counter }}</td>
+							<td>{{ sal.articulo.descripcion }}</td>
+							<td class="text-center">{{ sal.cantidad }}</td>
+							<td>{{ sal.articulo.medida }}</td>
+							<td class="text-center">{{ sal.precio }}</td>
+							<td class="text-center">{{ sal.fecha_s|date:"d / m / Y"}}</td>
+							<td class="text-center">
+								{% if perms.articulo.ver_detalle_salida %}
+									<a class="btn btn-default btn-xs" href="{% url 'detalle_salida' sal.id %}" data-toggle="tooltip" data-placement="top" title="Detalle"><span class="glyphicon glyphicon-zoom-in"></span></a>
+								{% endif %}
+							</td>
+							{% comment %}
+								{% suma sal.cantidad sal.precio_u as total %}
+								<td>{{ total }}</td>
+							{% endcomment %}
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+
+{% endblock container %}
+
+{% block js %}
+	<script src="{% static "web/dataTables/js/jquery.dataTables.min.js" %}"></script>
+	<script src="{% static "web/dataTables/js/dataTables.bootstrap.min.js" %}"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			var table = $('#tabla').DataTable({
+				"language": {
+					url: "/static/web/dataTables/localizacion/es_ES.json"
+				}
+			} );
+		});
+	</script>
+{% endblock js %}

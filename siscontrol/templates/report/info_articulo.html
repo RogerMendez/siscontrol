@@ -1,0 +1,48 @@
+<style type="text/css">
+    .bio-row {width: 100%; float: left; margin-bottom: 10px; padding:0 15px;}
+    .bio-row p span {width: 150px; display: inline-block; font-weight: bold; margin-left: 10px;}
+</style>
+<div class="row">
+    <div class="col-lg-6">
+        <div class="bio-row"><p><span>Descripcion </span>: {{ articulo.descripcion }}</p></div>
+        <div class="bio-row"><p><span>Marca </span>: {{ articulo.marca }}</p></div>
+
+    </div>
+    <div class="col-lg-6">
+        <div class="bio-row"><p><span>Cuenta Contable </span>: {{ articulo.categoria }}</p></div>
+        {% if articulo.modelo == '' %}
+            <div class="bio-row"><p><span></span></p></div>
+        {% else %}
+            <div class="bio-row"><p><span>Modelo </span>: {{ articulo.modelo }}</p></div>
+        {% endif %}
+
+    </div>
+</div>
+
+<!--
+<div class="row">
+    <h2>Informacion de Activo</h2>
+    <div class="col-md-12">
+        <div class="row">
+        <div class="col-md-6">
+            <p class="lead">
+                <strong>Descripcion: </strong> {{ articulo.descripcion }}
+            </p>
+            <p class="lead">
+                <strong>Marca: </strong>{{ articulo.marca }}
+            </p>
+            <p class="lead">
+                <strong>Modelo: </strong>{{ articulo.modelo }}
+            </p>
+        </div>
+        <div class="col-md-6">
+            <p class="lead">
+                <strong>Cuenta Contable: </strong>{{ articulo.account }}
+            </p>
+            <p class="lead">
+                <strong>Categoria: </strong>{{ articulo.categoria }}
+            </p>
+        </div>
+        </div>
+    </div>
+</div>-->

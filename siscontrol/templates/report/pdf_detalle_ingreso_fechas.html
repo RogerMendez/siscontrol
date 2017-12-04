@@ -1,0 +1,47 @@
+{% extends 'base_reporte.html' %}
+
+{% block cuerpo %}
+{% load h_ingresos %}
+<div class="x_panel">
+	<div class="x_title">
+        <div class="row">
+            <div class="col-md-6" align="center">
+            	<h2 class="title">ENTIDAD MUNICIPAL DE ASEO POTOSI</h2>
+            	<h2 class="title">"E.M.A.P."</h2>
+                <p class="title" align="left">Detalle Ingresos desde <strong>{{ fecha_ini|date:"d / m / Y" }}</strong> hasta <strong>{{ fecha_fin|date:"d / m / Y" }}</strong></p>
+                <div class="barra">.</div>
+		        <div class="clearfix"></div>
+            </div>
+        </div>
+	</div>
+    {% include 'report/info_articulo.html' %}
+	<div class="x_content">
+		<div class="table-responsive">
+			<table id="tabla" class="table table-bordered table-hover ">
+				<thead style="background-color: #374a5e;">
+					<tr>
+						<th class="text-center" width="15px">#</th>
+						<th class="text-center">Cantidad</th>
+						<th class="text-center">Unidad de Medida</th>
+						<th class="text-center">Precio Unitario</th>
+						<th class="text-center">Precio Total</th>
+						<th class="text-center">Fecha de Ingreso</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for ingreso in ingresos %}
+						<tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ ingreso.cantidad }}</td>
+                            <td>{{ ingreso.articulo.medida }}</td>
+                            <td>{{ ingreso.precio_u }}</td>
+                            <td>{{ ingreso.precio_t }}</td>
+                            <td>{{ ingreso.fecha_i|date:"d / m / Y" }}</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+{% endblock %}

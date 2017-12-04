@@ -1,0 +1,120 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+ <html>
+     <head>
+        <meta http-equiv="content-type" content="text/html" />
+         <title>Reporte</title>
+         <style type="text/css">
+            @page {
+                size: letter;
+                margin-left: 2cm;
+                margin-top: 2cm;
+                margin-right: 2cm;
+                margin-bottom:1cm;
+
+                @frame footer {
+                -pdf-frame-content: footerContent;
+                bottom: 1cm;
+                margin-left: 1cm;
+                margin-right: 1cm;
+                height: 1cm;
+                }
+            }
+
+            .header {font-weight: 100;text-align: center;color: #000; font-family: courier;}
+            .title {font-size: 19px; padding: -5px;}
+            .hrItem { font-size: 2px; background: #000000; line-height: 1em; }
+            .firmas{border: none !important; color: #000; font-weight: 100; margin-top: 250px; text-align: center; font-size: 12px;}
+            .hrline {border: none;height: 1px;color: #333;background-color: #fff; width: 10%;}
+            .bio-row {width: 100%;float: left;margin-bottom: 10px;padding:0 15px; font-size: 11px;}
+            .bio-row p span {width: 200px;display: inline-block;font-weight: bold;}
+            .al{text-align: right !important; font-size: 11px; padding: 5px 10px 2px 0px;}
+            .tabla{ text-align: center;font-size: 10px;margin-top: 15px;}
+            .firma{border: none !important; color: #000; font-weight: 100; text-align: center; font-size: 12px;}
+            .deta{text-align: left !important; padding: 3px; font-size: 11px;}
+
+         </style>
+    </head>
+    <body>
+        <div class='wraper'>
+
+            <div class='header'>
+                <h2 class='title'>ENTIDAD MUNICIPAL DE ASEO POTOSI</h2>
+                <h2 class='title'>"E.M.A.P."</h2>
+                <h2 class='title'>INGRESO DE MATERIAL</h2>
+            </div>
+            <div>
+                <div class='hrItem' />.</div><br>
+                <!--<div class="al">
+                    <table border="0.1" align="right">
+                        <tr><td width="130px" style="background-color:#EEEAEA">N° &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {{ ing.folio }}</td></tr>
+                    </table>
+                </div>-->
+                <div class="deta">
+                    <table>
+                        <tr><td width="200px"><b>Unidad Solicitante  </b></td><td> : {{ ing.empleado.departamento }}</td></tr>
+                        <tr><td width="200px"><b>Solicitante  </b></td><td> : {{ ing.empleado.nombre }}&nbsp;{{ing.empleado.apellidos}}</td></tr>
+                        <tr><td width="200px"><b>Casa Proveedora  </b></td><td> : {{ ing.articulo.proveedor }}</td></tr>
+                        <tr><td width="200px"><b>Ubicacion  </b></td><td> : {{ ing.articulo.almacen }}</td></tr>
+                        <!--<tr><td width="200px"><b>Obj. de lo Solicitado  </b></td><td> :
+                            {% if ing.objeto == "" %}
+                                <p>Ninguna</p>
+                            {% else %}
+                                {{ ing.objeto }}
+                            {% endif %}
+                        </td></tr>-->
+                        <tr><td width="200px"><b>Fecha de Ingreso  </b></td><td> : {{ing.fecha_i|date:"d / m / Y"}}</td></tr>
+                        <tr><td width="200px"><b>N° de Factura  </b></td><td> : {{ing.factura}}</td></tr>
+                    </table>
+                </div>
+
+        </div>
+        <div class="tabla">
+            <table border="0.7" style="padding:5px;">
+                <thead style="background-color:#EEEAEA">
+                 <tr>
+                     <td><b>DETALLE</b></td>
+                     <td><b>CANTIDAD</b></td>
+                     <td><b>UNIDAD</b></td>
+                     <td><b>PRECIO UNITARIO</b></td>
+                     <td><b>PRECIO TOTAL</b></td>
+                     <td><b>OBSERVACIONES</b></td>
+                 </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{ing.articulo}}</td>
+                        <td>{{ing.cantidad}}</td>
+                        <td>{{ing.articulo.medida}}</td>
+                        <td>{{ing.precio_u}}</td>
+                        <td>{{ing.precio_t}}</td>
+                        <td>
+                            {% if ing.observacion == "" %}
+                                <p>Ninguna</p>
+                            {% else %}
+                                {{ing.observacion}}
+                            {% endif %}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="firmas">
+            <table>
+                <tr><td>ENTREGUE CONFORME</td><td>RECIBI CONFORME</td><td>VO. BO.</td></tr>
+            </table>
+        </div><br><br><br><br>
+        <div class="firma">
+            <table>
+                <tr><td>___________________________</td><td>___________________________</td><td>___________________________</td></tr>
+            </table><br>
+            <table>
+                <tr><td>Enc. Cotizacion - Compras</td><td>Enc. Almacenes</td><td>Director Adm. Financiero</td></tr>
+            </table>
+        </div>
+
+        <!--<div id="footerContent">
+            Página: <pdf:pagenumber> de <pdf:pagecount>
+        </div>-->
+    </body>
+</html>

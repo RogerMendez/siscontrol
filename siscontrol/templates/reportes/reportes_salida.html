@@ -1,0 +1,78 @@
+{% extends "base/base.html" %}
+{% load static %}
+{% block css %}
+    <link rel="stylesheet" type="text/css" href=" {% static "web/datepicker/datepicker3.css" %}">
+{% endblock css %}
+{% block container %}
+<div class="x_panel">
+    <div class="x_title">
+        <h2>Reporte - Salidas - Total</h2>
+        <div class="clearfix"></div>
+    </div>
+    <div class="x_content">
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="panel-body" >
+                        <form action="" method="POST" enctype='multipart/form-data' class="form-horizontal">  {% csrf_token %}
+                            <div class="row">
+                                {% if error %}
+                                    <div class="col-md-2" style="margin-left:5px;">
+                                        <a href="{% url 'crear_reporte_salidas' %}" class="btn btn-success btn-sm btn-flat"><span class="  glyphicon glyphicon-repeat"></span> Actualizar</a>
+                                    </div>
+                                    <div class="col-md-6 col-md-offset-1">
+                                        <div class="alert alert-danger alert-dismissable fade in" role="alert">
+                                            <a href="#"  class="close" data-dismiss="alert" aria-label="close"><span aria-hidden="true">&times;</span></a><strong> <span class="glyphicon glyphicon-remove-circle"></span>  ¡&nbsp;Atencion...&nbsp;!</strong> &nbsp;&nbsp;&nbsp;{{error}}
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <div class="row">
+                                <div class=" col-md-offset-2 col-md-4">
+                                    <div class="form-group">
+                                        <label for="" class="control-label col-md-4" for="Date">Fecha Inicio :</label>
+                                        <div class="col-md-7 input-group">
+                                            {{ rangoform.fecha_i }}
+                                            <span class="input-group-addon">
+                                                <span class="glyphicon glyphicon-calendar"></span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="" class="control-label col-md-4" for="Date">Fecha Fin :</label>
+                                        <div class="col-md-7 input-group">
+                                            {{ rangoform.fecha_f }}
+                                            <span class="input-group-addon">
+                                                <span class="glyphicon glyphicon-calendar"></span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <button  type="submit" class="btn btn-danger btn-sm btn-flat" target="_blank"><span class="fa fa-file-pdf-o"></span>  Generar Reporte</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock container %}
+
+{% block js %}
+    <script src="{% static 'web/datepicker/bootstrap-datepicker.js' %}"></script>
+
+    <script>
+        $('#Fecha_i').datepicker({
+            autoclose: true,
+            todayHighlight: true,
+        });
+
+        $('#Fecha_f').datepicker({
+            autoclose: true,
+            todayHighlight: true,
+        });
+    </script>
+{% endblock js %}

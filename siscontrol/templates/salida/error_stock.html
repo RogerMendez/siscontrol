@@ -1,0 +1,23 @@
+{% extends "base/base1.html" %}
+
+{% block css%}
+	<style type="text/css">
+		.app {
+			margin-left: 50px;
+		}
+		.alerta {
+			max-width: 400px;margin: 5px auto 0;
+		}
+	</style>
+{% endblock css%}
+
+{% block container %}
+	<a href="{% url 'lista_articulo' %}" class="btn btn-success btn-sm btn-flat app"> <span class="glyphicon glyphicon-arrow-left" style="color: #172983; font-size: 15px;"></span> &nbsp;&nbsp;Regresar</a>
+
+	<div class="alerta">
+    	<div class="alert alert-danger" role="alert">
+            	<p class="text-justique"> <span class="glyphicon glyphicon-remove-circle" style="font-size: 20px;"></span>&nbsp;&nbsp;&nbsp; <strong>Error  la cantidad es mayor al stock...</strong></p>
+    	</div>
+	</div>
+
+{% endblock container %}

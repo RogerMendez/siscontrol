@@ -1,0 +1,94 @@
+
+{% extends "base/base.html" %}
+
+
+{% block container %}
+<div class="x_panel">
+	<div class="x_title">
+		<h2>Registrar Unidad</h2>
+		<div class="clearfix"></div>
+	</div>
+	<div class="x_content">
+		<form method="POST"  action="" id="formulario">{% csrf_token %}
+			<div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-4 col-xs-12">
+				<fieldset>
+					{% for field in form %}
+						{% if field.errors %}
+							<div class="alert alert-danger" role="alert">
+								{{ field.errors }}
+							</div>
+						{% endif %}
+						<div class="form-group">
+							{{ field.label_tag }}
+							{{ field }}
+						</div>
+						{% if field.help_text %}
+							<p class="help-block">{{ field.help_text|safe }}</p>
+						{% endif %}
+					{% endfor %}
+
+				<!--<div class="form-group">
+					<label for="">Nombre</label>
+					{{ form.descripcion }}
+					<span class="help-block">{{form.descripcion.errors}}</span>
+				</div>-->
+
+					<div class="text-center">
+						<input type="submit" value="Guardar" class="btn btn-primary btn-sm">
+						<a href="{% url 'lista_departamento' %}" class="btn btn-default btn-sm" id="lista_unidad">Cancelar</a>
+					</div>
+				</fieldset>
+			</div>
+		</form>
+	</div>
+</div>
+{% endblock container %}
+{% comment %}
+{% block js %}/*
+	<script type="text/javascript">
+		$(document).ready(function($) {
+			//var page = '';
+			//history.pushState(page, 'Ubicacion', '/almacen/');
+			$("#lista_unidad").on("click", function(e){
+				e.preventDefault()
+				$.ajax({
+					url: '/departamento/',
+					type: 'GET',
+					data: {},
+				})
+				.done(function(response) {
+					$("#container").html(response)
+				})
+				.fail(function() {
+					console.log("error");
+				})
+				.always(function() {
+					console.log("complete");
+				});
+			})
+		});
+	</script>
+	<script type="text/javascript">
+		$(document).ready(function($) {
+			$("#formulario").submit(function(event) {
+				var info=$(this).serializeObject()
+				$.ajax({
+					url: '/crear/departamento/',
+					type: 'POST',
+					data: info,
+				})
+				.done(function(response) {
+					$("#container").html(response)
+				})
+				.fail(function() {
+					console.log("error");
+				})
+				.always(function() {
+					console.log("complete");
+				});
+				return false;
+			});
+		});
+	</script>
+{% endblock js %}
+{% endcomment %}

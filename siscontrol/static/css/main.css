@@ -1,0 +1,60 @@
+ .btn-link {
+	margin: 0 0 0 40% !important;
+	box-shadow: none;
+	text-decoration: none;
+}
+.btn-link:hover {
+	color: #fff;
+	text-decoration: none;
+}
+@media(max-width: 480px){
+	.btn-link {
+		display: block;
+		margin: 0 0 0 0 !important;
+	}
+}
+/*------------------------------------------------*/
+.alerta {max-width: 300px;margin: 5px auto 0;}
+#login-body {
+    background-image:  url(../images/logo.png);
+    background-size: 100vw 100vh;
+	background-attachment: fixed;
+    padding-top: 50px;
+}
+.login {
+	max-width: 250px;
+	padding: 15px;
+	margin: auto;
+}
+
+#app-login {
+	max-width: 250px;
+	margin: 50px auto 0;
+	box-shadow: 0px 0px 18px 0px rgba(48, 50, 50, 0.48);
+		-webkit-box-shadow: 0px 0px 18px 0px rgba(48, 50, 50, 0.48);
+		-moz-box-shadow: 0px 0px 18px 0px rgba(48, 50, 50, 0.48);
+	border-radius: 6%;
+		-webkit-border-radius: 6%;
+		-moz-border-radius: 6%;
+	background: rgba(0,0,0,0.4);
+}
+
+#avatar {
+	width: 96px;
+	height: 96px;
+	margin: 0px auto  10px;
+	display: block;
+	border-radius: 50%;
+		-webkit-border-radius: 50%;
+		-moz-border-radius: 50%;
+}
+/*-----------------------------------------------*/
+.errorlist li{
+	/*background-color: #f2dede !important;*/
+	color: #a94442;
+	border-color: #ebccd1 !important;
+	text-align: center;
+	display: block;
+	margin-left: -50px;
+	box-sizing: border-box;
+}

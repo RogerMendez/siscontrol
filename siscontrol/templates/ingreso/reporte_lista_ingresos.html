@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+	<head>
+		<title>Reporte - Ingresos</title>
+		<meta http-equiv="content-type" content="text/html" />
+		<style>
+			@page {
+				size: letter;
+					margin-top: 4cm;
+					margin-right: 2cm;
+					margin-bottom: 2cm;
+					margin-left: 2cm;
+				@frame header_frame {
+					-pdf-frame-content: headerContent;
+					font-size: 13;
+					font-family: courier;
+					top: 2cm;
+				}
+				@frame footer {
+					-pdf-frame-content: footerContent;
+					bottom: 1cm;
+					margin-left: 1cm;
+					max-height: 1cm;
+					height: 0;
+				}
+			}
+			table {border:1px solid #000; border-collapse: collapse;}
+			#table-th {border: 1px solid #000; padding: 2px;}
+			#table-td {border: 1px solid #000; padding: 3px;}
+			#td-total {border: 2px solid #000; padding: 2px;}
+			.barra{font-size: 2px; background: #000000; line-height: 1em;}
+		</style>
+	</head>
+	<body>
+		<div id="headerContent">
+			<center> <h2>ENTIDAD MUNICIPAL DE ASEO POTOSI</h2></center>
+			<center> <h2>"EMAP"</h2></center>
+		</div>
+		<div class="barra">.</div><br>
+		<tr><td><b>REPORTE DE INGRESO</b></td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<td><b>Fecha:&nbsp; </b>{{hora|date:"d / m / Y - P"}}</td></tr>
+
+		<table>
+			<tr id="table-th" style="background-color: #EEEAEA;">
+				<th width="30">N°</th>
+				<th>FECHA INGRESO</th>
+				<th>DETALLE</th>
+				<th>CANTIDAD</th>
+				<th>UNIDAD MEDIDA</th>
+				<th>PRECIO UNITARIO</th>
+				<th>PRECIO TOTAL</th>
+			</tr>
+			{% for c in rango %}
+				<tr id="table-td">
+					<td width="30"><center>{{forloop.counter}}</center></td>
+					<td><center>{{c.fecha_i|date:"d / m / Y"}}</center></td>
+					<td>{{c.articulo}}</td>
+					<td><center>{{c.cantidad}}</center></td>
+					<td><center>{{c.articulo.medida}}</center></td>
+					<td><center>{{c.precio_u}}</center></td>
+					<td><center>{{c.precio_t}}</center></td>
+				</tr>
+			{% endfor%}
+
+			<tr id="td-total"><td style="background-color: #2ecc71;" colspan="6"><center><b>TOTAL</b></center></td> <td style="background-color: #2ecc71;"><center><b>{{total_i}}</b></center></td></tr>
+		</table>
+
+		<div id="footerContent">
+			Página: <pdf:pagenumber> de <pdf:pagecount>
+		</div>
+
+	</body>
+</html>

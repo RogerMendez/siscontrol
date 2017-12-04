@@ -1,0 +1,77 @@
+
+{% extends "base/base.html" %}
+
+
+{% block container %}
+<div class="x_panel">
+	<div class="x_title">
+		<h2>Eliminar Unidad</h2>
+		<div class="clearfix"></div>
+	</div>
+	<div class="x_content">
+		<form action="" method="POST" id="formulario">{% csrf_token %}
+			<div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-4 col-xs-12">
+				<h4 class="text-center">Desea eliminar la unidad.. <b>{{object.descripcion}}</b>...?</h4>
+				<br><br>
+				<div class="text-center">
+					<input type="submit" value="Si,  seguro" class="btn btn-danger btn-sm">
+					<a href="{% url 'lista_departamento' %}" class="btn btn-default btn-sm" id="lista_unidad">Cancelar</a>
+				</div><br>
+			</div>
+		</form>
+	</div>
+</div>
+{% endblock container %}
+
+
+{% comment %}
+{% block js %}
+	<script type="text/javascript">
+		$(document).ready(function($) {
+			$("#formulario").submit(function(event) {
+				//var page = '';
+				//history.pushState(page, 'Ubicacion', '/almacen/');
+				var info=$(this).serializeObject()
+				$.ajax({
+					url: '{% url 'eliminar_departamento' object.id %}',
+					type: 'POST',
+					data: info,
+				})
+				.done(function(response) {
+					$("#container").html(response)
+				})
+				.fail(function() {
+					console.log("error");
+				})
+				.always(function() {
+					console.log("complete");
+				});
+				return false;
+			});
+		});
+	</script>
+	<script type="text/javascript">
+		$(document).ready(function($) {
+			//var page = '';
+			//history.pushState(page, 'Ubicacion', '/almacen/');
+			$("#lista_unidad").on("click", function(e){
+				e.preventDefault()
+				$.ajax({
+					url: '/departamento/',
+					type: 'GET',
+					data: {},
+				})
+				.done(function(response) {
+					$("#container").html(response)
+				})
+				.fail(function() {
+					console.log("error");
+				})
+				.always(function() {
+					console.log("complete");
+				});
+			})
+		});
+	</script>
+{% endblock js %}
+{% endcomment %}

@@ -1,0 +1,63 @@
+{% extends "base/base.html" %}
+{% block css %}
+<style type="text/css">
+    .bio-row {width: 100%;float: left;margin-bottom: 10px;padding:0 15px;}
+    .bio-row p span {width: 200px;display: inline-block;font-weight: bold;margin-left: 10px;}
+</style>
+{% endblock css %}
+{% block container %}
+<div class="x_panel">
+	<div class="x_title">
+		<h2>Detalle Ingreso</h2>
+		<div class="clearfix"></div>
+	</div>
+	<div class="x_content">
+		<div class="row">
+			<div class="col-xs-12 col-md-6">
+				<div class="bio-row"><p><span>Unidad Solicitante </span>: {{ object.empleado.departamento }}</p></div>
+				<div class="bio-row"><p><span>Solicitante </span>: {{ object.empleado.nombre }}&nbsp;{{object.empleado.apellidos}}</p></div>
+				<div class="bio-row"><p><span>Casa Proveedora </span>: {{ object.articulo.proveedor }}</p></div>
+				<!--<div class="bio-row"><p><span>Obj. de la Solicitado </span>: </p></div>-->
+			</div>
+			<div class="col-xs-12 col-md-6">
+				<!--<div class="bio-row"><p><span>N° de Documento </span>: {{ object.folio }}</p></div>-->
+				<div class="bio-row"><p><span>Ubicacion </span>: {{ object.articulo.almacen }}</p></div>
+				<!--<div class="bio-row"><p><span>Fecha de Ingreso </span>: </p></div>-->
+				<div class="bio-row"><p><span>N° de factura </span>: {{ object.factura}}</p></div>
+				<div class="bio-row"><p><span>Observacion </span>: {{ object.observacion }}</p></div>
+			</div>
+		</div>
+		<div class="table-responsive">
+			<table id="tabla" class="table table-bordered table-hover ">
+				<thead style="background-color: #374a5e;">
+					<tr>
+						<th class="text-center" width="15px">N°</th>
+						<th class="text-center">Descripcion</th>
+						<th class="text-center">Cantidad</th>
+						<th class="text-center">Unidad de Medida</th>
+						<th class="text-center">Precio Unitario</th>
+						<th class="text-center">Precio Total</th>
+						<th class="text-center">Fecha de Ingreso</th>
+					</tr>
+				</thead>
+				<tbody>
+						<tr>
+							<td class="text-center">{{ object.id }}</td>
+							<td>{{ object.articulo }}</td>
+							<td class="text-center">{{ object.cantidad }}</td>
+							<td>{{ object.articulo.medida }}</td>
+							<td class="text-center">{{ object.precio_u }}</td>
+							<td class="text-center">{{ object.precio_t }}</td>
+							<td class="text-center">{{ object.fecha_i|date:"d / m / Y"}}</td>
+						</tr>
+				</tbody>
+			</table>
+		</div><br>
+		<div class="row text-center">
+			<a class="btn btn-danger btn-sm btn-flat" href="{% url 'crear_pdf_ingreso' object.id %}" target="_blank"><span class="fa fa-file-pdf-o"></span> Ver en PDF</a>
+			<a href="{% url 'lista_ingreso' %}" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-remove"></span> Cancelar</a>
+		</div><br>
+	</div>
+</div>
+
+{% endblock container %}

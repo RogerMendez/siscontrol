@@ -1,0 +1,114 @@
+
+{% extends "base/base.html" %}
+
+
+{% load static %}
+{% block css %}
+	<link rel="stylesheet" type="text/css" href="{% static "web/dataTables/css/jquery.dataTables.min.css" %}">
+{% endblock css %}
+
+{% block container %}
+<div class="x_panel">
+	<div class="x_title">
+		<h2>Inventario</h2>
+		<ul class="nav navbar-right panel_toolbox">
+			{% if perms.articulo.add_articulo %}
+				<a href="{% url 'crear_articulo' %}" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-plus"></span> Agregar Material / Articulo</a>
+			{% endif %}
+		</ul>
+		<div class="clearfix"></div>
+	</div>
+	<div class="x_content">
+		<div class="table-responsive">
+			<table id="tabla" class="table table-bordered table-hover ">
+				<thead style="background-color: #374a5e;">
+					<tr>
+						<th class="text-center" width="15px">N°</th>
+						<th class="text-center">Codigo</th>
+						<th class="text-center">Descripcion</th>
+						<th class="text-center">Marca</th>
+						<th class="text-center">Unidad de Medida</th>
+						<!--<th class="text-center">Casa Proveedora</th>-->
+						<th class="text-center">Stock Actual</th>
+						<th class="text-center">Acciones</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for art in articulos %}
+						<tr>
+							<td class="text-center">{{ forloop.counter }}</td>
+							<td class="text-center">{{ art.cod_art }}</td>
+							<td>{{ art.descripcion }}</td>
+							<td>{{ art.marca }}</td>
+							<td>{{ art.medida }}</td>
+							<!--<td>{{ art.proveedor.razon_social}}</td>-->
+							{% if art.stock_actual == 0 %}
+								<td class="text-center" style="background-color: #D9534F; color:#fff;">{{ art.stock_actual }}</td>
+							{% elif art.stock_actual == 1 %}
+								<td class="text-center" style="background-color: #5bc0de; color:#fff;">{{ art.stock_actual }}</td>
+							{% else %}
+								<td class="text-center" style="background-color: #5cb85c; color:#fff;">{{ art.stock_actual }}</td>
+							{% endif %}
+							<td class="text-center" width="220px;">
+								{% if perms.articulo.ver_detalle_articulo %}
+									<a onclick="return abrir_modal('{% url 'detalle_articulo' art.id %}')" class="btn btn-default btn-xs" data-toggle="tooltip" data-placement="top" title="Detalle"><span class="glyphicon glyphicon-zoom-in"></span></a>
+								{% endif %}
+								{% if perms.articulo.change_articulo %}
+									<a href="{% url 'modificar_articulo' art.id %}" class="btn btn-info btn-xs"  data-toggle="tooltip" data-placement="top" title="Modificar"><span class="glyphicon glyphicon-pencil"></span></a>
+								{% endif %}
+								{% comment %}
+									{% if perms.articulo.delete_articulo %}
+									<a href="{% url 'eliminar_articulo' art.id %}" class="btn btn-danger btn-xs"  data-toggle="tooltip" data-placement="top" title="Eliminar"><span class="glyphicon glyphicon-trash"></span></a>
+								{% endif %}
+								{% endcomment %}
+
+								 &nbsp; || &nbsp;
+
+								{% if perms.articulo.add_ingreso %}
+									<a class="btn btn-primary btn-xs" href="/crear/ingreso/{{ art.id }}" data-toggle="tooltip" data-placement="top" title=" Ingreso de Material / Articulo"><span class="glyphicon glyphicon-arrow-down"></span></a>
+								{% endif %}
+								{% if perms.articulo.add_salida %}
+									<a class="btn btn-warning btn-xs" href="{% url 'crear_salida' art.id %}" data-toggle="tooltip" data-placement="top" title="Salida de Material / Articulo"><span class="glyphicon glyphicon-arrow-up"></span></a>
+								{% endif %}
+                                <a class="btn btn-success btn-xs" href="{% url 'articulo-kardex-movimiento' art.id %}" data-toggle="tooltip" data-placement="top" title="Kardex de Movimientos"><span class="glyphicon glyphicon-list-alt"></span></a>
+							</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+
+<div id="popup" class="modal fade" role="dialog">
+
+</div>
+{% endblock container %}
+
+{% block js %}
+	<script src="{% static "web/dataTables/js/jquery.dataTables.min.js" %}"></script>
+	<script src="{% static "web/dataTables/js/dataTables.bootstrap.min.js" %}"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			var table = $('#tabla').DataTable({
+				"language": {
+					url: "/static/web/dataTables/localizacion/es_ES.json"
+				}
+			} );
+		});
+	</script>
+
+	<script type="text/javascript">
+		function abrir_modal(url){
+			$('#popup').load(url, function(){
+				$(this).modal('show');
+			});
+			return false;
+		}
+
+		function cerrar_modal(){
+			$('#popup').modal('hide');
+			return false;
+		}
+	</script>
+{% endblock js %}

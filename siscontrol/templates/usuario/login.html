@@ -1,0 +1,63 @@
+{% extends "base/base1.html" %}
+{% load staticfiles %}
+
+{% block container %}
+	{% if messages %}
+		<div class="alerta">
+			<div class="alert alert-danger" role="alert">
+				{% for message in messages  %}
+					<p class="text-justique"> <span class="glyphicon glyphicon-remove-circle"></span>&nbsp;&nbsp; {{ message }}&nbsp; Por favor verifique.</p>
+				{% endfor %}
+			</div>
+		</div>
+	{% endif %}
+	<div class="container well" id="app-login">
+		<div class="row">
+			<div class="col-xs-12">
+				<img src="{% static 'images/personal.png' %}" alt="avatar" class='img-responsive' id="avatar">
+			</div>
+		</div>
+
+		<form action="" method='POST' class='login' id="form_login">{% csrf_token %}
+			<div class="form-group">
+				<input type="text" class='form-control' name='username' placeholder='Usuario' required autofocus>
+			</div>
+			<div class="form-group">
+				<input type="password" class="form-control" name='password' placeholder='Contraseña' required>
+			</div>
+			<input type="submit" class="btn btn-primary btn-block" value="Ingresar">
+		</form>
+	</div>
+{% endblock container %}
+
+{% block js %}
+	<script type="text/javascript">
+		$(document).ready(function($) {
+			$("#form_login").submit(function(event) {
+				var info = $(this).serializeObject()
+				$.ajax({
+					url: 'logueo/',
+					type: 'POST',
+					data: info,
+				})
+				.done(function(html) {
+					renderizar(html)
+				})
+				.fail(function() {
+					console.log("error");
+				})
+				.always(function() {
+					console.log("complete");
+				});
+
+				return false;
+
+			});
+		});
+		renderizar = function(r){
+			$("#container").html(r)
+			$("#container").hide()
+			$("#container").show('slow')
+		}
+	</script>
+{% endblock js %}

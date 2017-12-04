@@ -1,0 +1,83 @@
+{% extends "base/base.html" %}
+{% load static %}
+{% block css %}
+	<link rel="stylesheet" type="text/css" href="{% static "web/dataTables/css/jquery.dataTables.min.css" %}">
+{% endblock css %}
+
+{% block container %}
+    {% load h_ingresos %}
+<div class="x_panel">
+	{% include 'includes/__form_get.html' %}
+	<hr style="padding: 0px; margin-top: 0px;">
+    <div class="x_title">
+        <div class="row">
+			<h2>Detalle Ingresos desde <strong>{{ fecha_ini|date:"d / m / Y" }}</strong> hasta <strong>{{ fecha_fin|date:"d / m / Y" }}</strong></h2>
+			<ul class="nav navbar-right panel_toolbox">
+				<a href="{% url 'pdf-detail-ingresos-fechas' articulo.id fecha_ini.year fecha_ini.month fecha_ini.day fecha_fin.year fecha_fin.month fecha_fin.day %}" target="_blank" class="btn btn-danger btn-sm"><span class="fa fa-file-pdf-o"></span> Ver  PDF</a>
+			</ul>
+			<div class="clearfix"></div>
+        </div>
+	</div>
+    {% include 'report/info_articulo.html' %}
+	<div class="x_content">
+		<div class="table-responsive">
+			<table id="tabla" class="table table-bordered table-hover ">
+				<thead style="background-color: #374a5e;">
+					<tr>
+						<th class="text-center" width="15px">#</th>
+						<th class="text-center">Cantidad</th>
+						<th class="text-center">Unidad de Medida</th>
+						<th class="text-center">Precio Unitario</th>
+						<th class="text-center">Precio Total</th>
+						<th class="text-center">Fecha de Ingreso</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for ingreso in ingresos %}
+						<tr>
+                            <td class="text-center">{{ forloop.counter }}</td>
+                            <td class="text-center">{{ ingreso.cantidad }}</td>
+                            <td>{{ ingreso.articulo.medida }}</td>
+                            <td class="text-center">{{ ingreso.precio_u }}</td>
+                            <td class="text-center">{{ ingreso.precio_t }}</td>
+                            <td class="text-center">{{ ingreso.fecha_i|date:"d / m / Y" }}</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+
+<div id="popup" class="modal fade" role="dialog">
+
+</div>
+{% endblock container %}
+
+{% block js %}
+	<script src="{% static "web/dataTables/js/jquery.dataTables.min.js" %}"></script>
+	<script src="{% static "web/dataTables/js/dataTables.bootstrap.min.js" %}"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			var table = $('#tabla1').DataTable({
+				"language": {
+					url: "/static/web/dataTables/localizacion/es_ES.json"
+				}
+			} );
+		});
+	</script>
+
+	<script type="text/javascript">
+		function abrir_modal(url){
+			$('#popup').load(url, function(){
+				$(this).modal('show');
+			});
+			return false;
+		}
+
+		function cerrar_modal(){
+			$('#popup').modal('hide');
+			return false;
+		}
+	</script>
+{% endblock js %}

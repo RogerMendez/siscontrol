@@ -1,0 +1,56 @@
+{% extends "base/base.html" %}
+{% block container %}
+<div class="x_panel">
+    <div class="x_title">
+        <h2>Modificar Funcionario</h2>
+        <div class="clearfix"></div>
+    </div>
+    <div class="x_content">
+        <form method="POST" >{% csrf_token %}
+            <div class="col-md-12 col-xs-12">
+                <div class="row ">
+                   <div class="col-md-4 col-md-offset-1">
+                        <div class="form-group">
+                            <label for="">C.  I.</label>
+                            {{ form.ci }}  <span class="help-block">{{ form.ci.errors }}</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="nombre">Nombre</label>
+                            {{ form.nombre}}  <span class="help-block">{{ form.nombre.errors}}</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="">Apellidos</label>
+                            {{ form.apellidos}}  <span class="help-block">{{ form.apellidos.errors}}</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="">Cargo</label>
+                            {{ form.cargo}}  <span class="help-block">{{ form.cargo.errors}}</span>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="razon_social">Unidad</label>
+                            {{ form.departamento }}  <span class="help-block">{{form.departamento.errors}}</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="direccion">Direccion</label>
+                            {{ form.direccion }}  <span class="help-block">{{form.direccion.errors}}</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="telefono">Telefono</label>
+                            {{ form.telefono }}  <span class="help-block">{{form.telefono.errors}}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row text-center">
+                    <input type="submit" value="Guardar" class="btn btn-primary btn-sm">
+                    <a href="{% url 'lista_empleado' %}" class="btn btn-default btn-sm">Cancelar</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock container %}

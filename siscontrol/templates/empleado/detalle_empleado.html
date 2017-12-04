@@ -1,0 +1,45 @@
+<style type="text/css">
+    .bio-row {
+    width: 100%;
+    float: left;
+    margin-bottom: 10px;
+    padding:0 15px;
+}
+
+    .bio-row p span {
+    width: 100px;
+    display: inline-block;
+    font-weight: bold;
+    margin-left: 10px;
+}
+</style>
+
+
+<div class="modal-dialog modal-md">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">x</button>
+                <h3>Detalle Funcionario</h3>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="bio-row"><p><span>C. I. </span>: {{ object.ci}}</p></div>
+                    <div class="bio-row"><p><span>Nombre </span>: {{ object.nombre }}</p></div>
+                        <div class="bio-row"><p><span>Apellidos </span>: {{ object.apellidos }}</p></div>
+                        <div class="bio-row"><p><span>Cargo </span>: {{ object.cargo }}</p></div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="bio-row"><p><span>Departamento </span>: {{ object.departamento }}</p></div>
+                    <div class="bio-row"><p><span>Direccion </span>: {{ object.direccion }}</p></div>
+                    <div class="bio-row"><p><span>Telefono </span>: {{ object.telefono }}</p></div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <div class="col-lg-12 text-right">
+                <button type="button" class="btn btn-primary" onclick="return cerrar_modal()">Aceptar</button>
+            </div>
+        </div>
+    </div>
+</div>

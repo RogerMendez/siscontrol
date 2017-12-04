@@ -1,0 +1,79 @@
+{% extends 'base_reporte_horizontal.html' %}
+{% block cuerpo %}
+{% load myhelper %}
+<div class="x_panel">
+	<div class="x_title">
+		<h2>KARDEX FISICO VALORADO</h2>
+		<div class="clearfix"></div>
+	</div>
+	<div class="x_content">
+    {% include 'report/info_articulo.html' %}
+        <div class="table-responsive">
+            <table id="tabla" class="table table-bordered table-hover ">
+                <thead style="background-color: #374a5e;">
+                    <tr>
+                        <th rowspan="2" class="text-center">Fecha</th>
+                        <th class="text-center">N° de Doc.</th>
+                        <th rowspan="2" class="text-center">Descripcion</th>
+                        <th colspan="3" class="text-center">Fisico</th>
+                        <th rowspan="2" class="text-center">Precio Unitario</th>
+                        <th colspan="3" class="text-center">Valores</th>
+                    </tr>
+                    <tr>
+                        <th class="text-center">Factura</th>
+                        <th class="text-center">Entrada</th>
+                        <th class="text-center">Salida</th>
+                        <th class="text-center">Saldo</th>
+                        <th class="text-center">Entrada</th>
+                        <th class="text-center">Salida</th>
+                        <th class="text-center">Saldo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% total as total %}
+                    {% total as precio %}
+                    {% for f in fechas %}
+                        {% if f.concepto == 'ingreso' %}
+                            {% ingreso f.id as i %}
+                            <tr>
+                                <td class="text-center">{{ f.fecha|date:"d M Y" }}</td>
+                                <td class="text-center">{{ i.factura }}</td>
+                                <td>{{ f.concepto|upper }} A ALMACENES</td>
+                                <td class="text-center">{{ i.cantidad }}</td>
+                                <td></td>
+                                {% sum_total total i.cantidad as total %}
+                                <td class="text-center">{{ total }}</td>
+                                <td class="text-center">{{ i.precio_u }}</td>
+
+                                <td class="text-center class="text-center"">{{ i.precio_t }}</td>
+                                <td></td>
+                                {% sum_total precio i.precio_t as precio %}
+                                <td class="text-center class="text-center"">{{ precio }}</td>
+
+                            </tr>
+                        {% endif %}
+                        {% if f.concepto == 'salida' %}
+                            {% salida f.id as s %}
+                            <tr>
+                                <td class="text-center">{{ f.fecha|date:"d M Y" }}</td>
+                                <td></td>
+                                <td>{{s.empleado}} - {{ s.empleado.departamento }}</td>
+                                <td></td>
+                                <td class="text-center">{{ s.cantidad }}</td>
+                                {% sustractio_total total s.cantidad as total %}
+                                <td class="text-center">{{ total }}</td>
+                                <td></td>
+                                <td></td>
+                                <td class="text-center">{{ s.precio }}</td>
+                                {% sustractio_total precio s.precio as precio %}
+                                <td class="text-center">{{ precio }}</td>
+                            </tr>
+
+                        {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+	</div>
+</div>
+{% endblock cuerpo %}

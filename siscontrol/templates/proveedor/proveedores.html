@@ -1,0 +1,96 @@
+
+{% extends "base/base.html" %}
+
+
+{% load static %}
+{% block css %}
+	<link rel="stylesheet" type="text/css" href="{% static "web/dataTables/css/jquery.dataTables.min.css" %}">
+{% endblock css %}
+
+{% block container %}
+<div class="x_panel">
+	<div class="x_title">
+		<h2>Proveedor</h2>
+		<ul class="nav navbar-right panel_toolbox">
+			{% if perms.proveedor.add_proveedor %}
+				<a href="{% url 'proveedores:crear_proveedor' %}" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-plus"></span> Agregar Proveedor</a>
+			{% endif %}
+		</ul>
+		<div class="clearfix"></div>
+	</div>
+	<div class="x_content">
+
+		<div class="table-responsive">
+			<table id="tabla" class="table table-bordered table-hover ">
+				<thead style="background-color: #374a5e;">
+					<tr>
+						<th class="text-center" width="15px">N°</th>
+						<th class="text-center">C. I.</th>
+						<th class="text-center">Nombres</th>
+						<th class="text-center">Apellidos</th>
+						<th class="text-center">Razon Social</th>
+						<th class="text-center" width="150px">Acciones</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for prov in proveedores %}
+						<tr>
+							<td class="text-center">{{ prov.id }}</td>
+							<td>{{ prov.ci }}</td>
+							<td>{{ prov.nombre }}</td>
+							<td>{{ prov.apellidos }}</td>
+							<td>{{ prov.razon_social}}</td>
+							<td class="text-center">
+								{% if perms.proveedor.ver_detalle_proveedor %}
+									<a onclick="return abrir_modal('{% url 'proveedores:detalle_proveedor' prov.pk %}')" class="btn btn-primary btn-xs" data-toggle="tooltip" data-placement="top" title="Detalle"><span class="glyphicon glyphicon-zoom-in"></span></a>
+								{% endif %}
+
+								{% if perms.proveedor.change_proveedor %}
+									<a href="{% url 'proveedores:modificar_proveedor' prov.id %}" class="btn btn-info btn-xs"><span class="glyphicon glyphicon-pencil" data-toggle="tooltip" data-placement="top" title="Modificar"></span></a>
+								{% endif %}
+
+								{% if perms.proveedor.delete_proveedor %}
+									<a href="{% url 'proveedores:eliminar_proveedor' prov.id %}" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash" data-toggle="tooltip" data-placement="top" title="Eliminar"></span></a>
+								{% endif %}
+							</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+
+	</div>
+</div>
+
+<div id="popup" class="modal fade" role="dialog">
+
+</div>
+{% endblock container %}
+
+{% block js %}
+	<script src="{% static "web/dataTables/js/jquery.dataTables.min.js" %}"></script>
+	<script src="{% static "web/dataTables/js/dataTables.bootstrap.min.js" %}"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			var table = $('#tabla').DataTable({
+				"language": {
+					url: "/static/web/dataTables/localizacion/es_ES.json"
+				}
+			} );
+		});
+	</script>
+
+	<script type="text/javascript">
+		function abrir_modal(url){
+			$('#popup').load(url, function(){
+				$(this).modal('show');
+			});
+			return false;
+		}
+
+		function cerrar_modal(){
+			$('#popup').modal('hide');
+			return false;
+		}
+	</script>
+{% endblock js %}

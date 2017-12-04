@@ -1,0 +1,113 @@
+
+{% extends "base/base.html" %}
+
+
+{% load static %}
+{% block css %}
+	<link rel="stylesheet" type="text/css" href="{% static "web/dataTables/css/jquery.dataTables.min.css" %}">
+{% endblock css %}
+
+{% block container %}
+<div class="x_panel">
+	<div class="x_title">
+		<h2>Ubicacion</h2>
+		<ul class="nav navbar-right panel_toolbox">
+			{% if perms.articulo.add_almacen %}
+				<a class="btn btn-success btn-sm show-form" href="{% url 'crear_almacen' %}" id="registro_almacen"><span class="glyphicon glyphicon-plus" ></span> Agregar Ubicacion</a>
+			{% endif %}
+		</ul>
+		<div class="clearfix"></div>
+	</div>
+	<div class="x_content">
+
+		<div class="table-responsive">
+			<table id="tabla" class="table table-bordered table-hover ">
+				<thead style="background-color: #374a5e;">
+					<tr>
+						<th class="text-center" width="15px">N°</th>
+						<th class="text-center" width="100px">Codigo</th>
+						<th class="text-center">Descripcion</th>
+						<th class="text-center" width="150px">Acciones</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for alm in almacenes %}
+						<tr>
+							<td class="text-center">{{ forloop.counter }}</td>
+							<td class="text-center">{{alm.cod_alm}}</td>
+							<td>{{ alm.descripcion }}</td>
+							<td class="text-center" id="menu">
+								{% if perms.articulo.change_almacen %}
+									<a class="btn btn-info btn-xs" href="{% url 'modificar_almacen' alm.id %}" data-toggle="tooltip" data-placement="top" title="Modificar"><span class="glyphicon glyphicon-pencil" ></span></a>
+								{% endif %}
+
+								{% if perms.articulo.delete_almacen %}
+									<a class="btn btn-danger btn-xs" href="{% url 'eliminar_almacen' alm.id %}" data-toggle="tooltip" data-placement="top" title="Eliminar" ><span class="glyphicon glyphicon-trash" ></span></a>
+								{% endif %}
+							</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+
+{% endblock container %}
+
+{% block js %}
+	<script src="{% static "web/dataTables/js/jquery.dataTables.min.js" %}"></script>
+	<script src="{% static "web/dataTables/js/dataTables.bootstrap.min.js" %}"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			var table = $('#tabla').DataTable({
+				"language": {
+					url: "/static/web/dataTables/localizacion/es_ES.json"
+				}
+			} );
+		});
+	</script>
+	<script type="text/javascript">/*
+		$(document).ready(function($) {
+			$("#menu a").on("click",function(e){
+				e.preventDefault()
+				var urla=$(this).attr("href");
+				$.ajax({
+					url: urla,
+					type: 'GET',
+					data: {},
+				})
+				.done(function(response) {
+					$("#container").html(response)
+				})
+				.fail(function() {
+					console.log("error");
+				})
+				.always(function() {
+					console.log("complete");
+				});
+			})
+		});*/
+	</script>
+	<script type="text/javascript">/*
+		$(document).ready(function($) {
+			$("#registro_almacen").on("click", function(e){
+				e.preventDefault()
+				$.ajax({
+					url: '/crear/almacen/',
+					type: 'GET',
+					data: {},
+				})
+				.done(function(response) {
+					$("#container").html(response)
+				})
+				.fail(function() {
+					console.log("error");
+				})
+				.always(function() {
+					console.log("complete");
+				});
+			})
+		});*/
+	</script>
+{% endblock js %}

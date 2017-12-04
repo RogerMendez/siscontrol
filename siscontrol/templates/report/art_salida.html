@@ -1,0 +1,84 @@
+{% extends "base/base.html" %}
+{% load static %}
+{% block css %}
+	<link rel="stylesheet" type="text/css" href="{% static "web/dataTables/css/jquery.dataTables.min.css" %}">
+{% endblock css %}
+
+{% block container %}
+    {% load h_ingresos %}
+<div class="x_panel">
+	<div class="x_title">
+		<h2>Reporte Salidas</h2>
+		<div class="clearfix"></div>
+	</div>
+	<div class="x_content">
+		<div class="table-responsive">
+			<table id="tabla" class="table table-bordered table-hover ">
+				<thead style="background-color: #374a5e;">
+					<tr>
+						<th class="text-center" width="15px">N°</th>
+						<th class="text-center">Descripcion</th>
+						<th class="text-center">Marca</th>
+						<th class="text-center">Unidad de Medida</th>
+						<th class="text-center">Casa Proveedora</th>
+						<th class="text-center">Acciones</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for art in articulos %}
+						<tr>
+							<td class="text-center">{{ forloop.counter }}</td>
+							<td>{{ art.descripcion }}</td>
+							<td>{{ art.marca }}</td>
+							<td>{{ art.medida }}</td>
+							<td>{{ art.proveedor.razon_social}}</td>
+							<td class="text-center">
+                                <a href="{% url 'report-detail-salida' art.id %}"
+                                   class="btn btn-info btn-xs"  data-toggle="tooltip" data-placement="top" title="Detalle Salidas">
+                                    <span class="glyphicon glyphicon-info-sign"></span>
+                                </a>
+                                <a href="{% url 'report-detail-salidas-fechas' art.id %}"
+                                   class="btn btn-success btn-xs"  data-toggle="tooltip" data-placement="top" title="Salidas Entre Fechas">
+                                    <span class="glyphicon glyphicon-info-sign"></span>
+                                </a>
+                            </td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+
+<div id="popup" class="modal fade" role="dialog">
+
+</div>
+{% endblock container %}
+
+{% block js %}
+	<script src="{% static "web/dataTables/js/jquery.dataTables.min.js" %}"></script>
+	<script src="{% static "web/dataTables/js/dataTables.bootstrap.min.js" %}"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			var table = $('#tabla').DataTable({
+				"language": {
+					url: "/static/web/dataTables/localizacion/es_ES.json"
+				}
+			} );
+		});
+	</script>
+
+	<script type="text/javascript">
+		function abrir_modal(url){
+			$('#popup').load(url, function(){
+				$(this).modal('show');
+			});
+			return false;
+		}
+
+		function cerrar_modal(){
+			$('#popup').modal('hide');
+			return false;
+		}
+	</script>
+{% endblock js %}

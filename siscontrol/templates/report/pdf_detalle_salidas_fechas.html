@@ -1,0 +1,52 @@
+{% extends 'base_reporte.html' %}
+
+{% block cuerpo %}
+{% load h_ingresos %}
+<div class="x_panel">
+	<div class="x_title">
+        <div class="row">
+            <div class="col-md-6" align="center">
+            	<h2 class="title">ENTIDAD MUNICIPAL DE ASEO POTOSI</h2>
+            	<h2 class="title">"E.M.A.P."</h2>
+                <h2 class="title">Detalle Salidas desde <strong>{{ fecha_ini|date:"d / m / Y" }}</strong> hasta <strong>{{fecha_fin|date:"d / m / Y" }}</strong></h2>
+                <div class="barra">.</div>
+		        <div class="clearfix"></div>
+            </div>
+        </div>
+	</div>
+    {% include 'report/info_articulo.html' %}
+	<div class="x_content">
+		<div class="table-responsive">
+			<table id="tabla" class="table table-bordered table-hover ">
+				<thead style="background-color: #374a5e;">
+					<tr>
+						<th class="text-center" width="15px">#</th>
+						<th class="text-center">Cantidad</th>
+						<th class="text-center">Precio</th>
+						<th class="funcionario">Funcionario</th>
+						<th class="text-center">Unidad</th>
+						<th class="text-center">Fecha de Salida</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for salida in salidas %}
+						<tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ salida.cantidad }}</td>
+                            <td>{{ salida.precio }}</td>
+                            <td class="fun">{{ salida.empleado }}</td>
+                            <td class="fun">{{ salida.empleado.departamento}}</td>
+                            <td>{{ salida.fecha_s|date:"d / m / Y" }}</td>
+						</tr>
+					{% endfor %}
+					<tr class="success">
+						<td colspan="2">TOTAL</td>
+						<td class="text-center">{% sum_precio_salida salidas %}</td>
+						<td colspan="3"></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+{% endblock %}

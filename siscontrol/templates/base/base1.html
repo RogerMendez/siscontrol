@@ -1,0 +1,30 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta charset="utf-8">
+		<meta class="v"></meta>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title> E. M. A. P. </title>
+
+		<link rel="stylesheet" href="{% static "web/bootstrap/css/bootstrap.min.css" %}">
+		<link rel="stylesheet" href="{% static "web/font-awesome/css/font-awesome.min.css" %}">
+		<link rel="stylesheet" href="{% static "css/main.css" %}">
+
+		{% block css %} 	{% endblock css %}
+	</head>
+	<body id="login-body">
+
+		{% block container %}
+
+		{% endblock container %}
+
+		<script>window.jQuery || document.write('<script src="{% static "js/jquery.min.js" %}"><\/script>')</script>
+		<script src="{% static "web/bootstrap/js/bootstrap.min.js" %}"></script>
+		<script src="{% static "web/nprogress/nprogress.js" %}"></script>
+
+
+		{% block js %}	{% endblock js %}
+	</body>
+</html>

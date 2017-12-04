@@ -1,0 +1,113 @@
+
+{% extends "base/base.html" %}
+
+
+{% load static %}
+{% block css %}
+	<link rel="stylesheet" type="text/css" href="{% static "web/dataTables/css/jquery.dataTables.min.css" %}">
+{% endblock css %}
+
+{% block container %}
+<div class="x_panel">
+	<div class="x_title">
+		<h2>Unidad</h2>
+		<ul class="nav navbar-right panel_toolbox">
+			{% if perms.empleado.add_departamento %}
+				<a class="btn btn-success btn-sm show-form" href="{% url 'crear_departamento' %}" id="registro_unidad"><span class="glyphicon glyphicon-plus" ></span> Agregar Unidad</a>
+			{% endif %}
+		</ul>
+		<div class="clearfix"></div>
+	</div>
+	<div class="x_content">
+
+		<div class="table-responsive">
+			<table id="tabla" class="table table-bordered table-hover ">
+				<thead style="background-color: #374a5e;">
+					<tr>
+						<th class="text-center" width="15px">N°</th>
+						<th class="text-center">Descripcion</th>
+						<th class="text-center" width="150px">Acciones</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for depa in departamentos %}
+						<tr>
+							<td class="text-center">{{ depa.id }}</td>
+							<td>{{ depa.descripcion }}</td>
+							<td class="text-center" id="menu">
+								{% if perms.empleado.change_departamento %}
+									<a class="btn btn-info btn-xs" href="{% url 'modificar_departamento' depa.id %}" data-toggle="tooltip" data-placement="top" title="Modificar"><span class="glyphicon glyphicon-pencil" ></span></a>
+								{% endif %}
+								{% if perms.empleado.delete_departamento %}
+									<a class="btn btn-danger btn-xs" href="{% url 'eliminar_departamento' depa.id %}"  data-toggle="tooltip" data-placement="top" title="Eliminar"><span class="glyphicon glyphicon-trash" ></span></a>
+								{% endif %}
+							</td>
+							</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+
+{% endblock container %}
+
+{% block js %}
+	<script src="{% static "web/dataTables/js/jquery.dataTables.min.js" %}"></script>
+	<script src="{% static "web/dataTables/js/dataTables.bootstrap.min.js" %}"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			var table = $('#tabla').DataTable({
+				"language": {
+					url: "/static/web/dataTables/localizacion/es_ES.json"
+				}
+			} );
+		});
+	</script>
+
+	</script>
+	<script type="text/javascript">/*
+		$(document).ready(function($) {
+			$("#menu a").on("click",function(e){
+				e.preventDefault()
+				var urla=$(this).attr("href");
+				$.ajax({
+					url: urla,
+					type: 'GET',
+					data: {},
+				})
+				.done(function(response) {
+					$("#container").html(response)
+				})
+				.fail(function() {
+					console.log("error");
+				})
+				.always(function() {
+					console.log("complete");
+				});
+			})
+		});*/
+	</script>
+	<script type="text/javascript">/*
+		$(document).ready(function($) {
+			$("#registro_unidad").on("click", function(e){
+				e.preventDefault()
+				$.ajax({
+					url: '/crear/departamento/',
+					type: 'GET',
+					data: {},
+				})
+				.done(function(response) {
+					$("#container").html(response)
+				})
+				.fail(function() {
+					console.log("error");
+				})
+				.always(function() {
+					console.log("complete");
+				});
+			})
+		});*/
+	</script>
+{% endblock js %}

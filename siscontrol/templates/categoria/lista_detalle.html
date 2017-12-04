@@ -1,0 +1,67 @@
+{% extends "base/base.html" %}
+{% load static %}
+{% block css %}
+	<link rel="stylesheet" type="text/css" href="{% static "web/dataTables/css/jquery.dataTables.min.css" %}">
+{% endblock css %}
+
+{% block container %}
+<div class="x_panel">
+	<div class="x_title">
+		<h2>Detalle Cuenta Contable</h2>
+		<div class="clearfix"></div>
+	</div>
+	<div class="x_content">
+
+		<div class="table-responsive">
+			<table id="tabla" class="table table-bordered table-hover ">
+				<thead style="background-color: #374a5e;">
+					<tr>
+						<th class="text-center" width="15px">N°</th>
+						<th class="text-center" width="100px">Codigo</th>
+						<th class="text-center">Descripcion</th>
+						<th class="text-center">Marca</th>
+						<th class="text-center">Unidad de Medida</th>
+						<th class="text-center">Stock Actual</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for art in articulos %}
+						<tr>
+							<td class="text-center">{{ forloop.counter }}</td>
+							<td class="text-center">{{ art.cod_art }}</td>
+							<td class="text-center">{{ art.descripcion }}</td>
+
+							<td class="text-center">{{ art.marca }}</td>
+							<td class="text-center">{{ art.medida }}</td>
+							<td class="text-center">{{ art.stock_actual }}</td>
+							<!--<td class="text-center">
+
+									<a class="btn btn-info btn-xs" href="#" data-toggle="tooltip" data-placement="top" title="Modificar"><span class="glyphicon glyphicon-pencil" ></span></a>
+
+
+									<a class="btn btn-danger btn-xs" href="#" data-toggle="tooltip" data-placement="top" title="Eliminar" ><span class="glyphicon glyphicon-trash" ></span></a>
+
+							</td>-->
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+
+{% endblock container %}
+
+{% block js %}
+	<script src="{% static "web/dataTables/js/jquery.dataTables.min.js" %}"></script>
+	<script src="{% static "web/dataTables/js/dataTables.bootstrap.min.js" %}"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			var table = $('#tabla').DataTable({
+				"language": {
+					url: "/static/web/dataTables/localizacion/es_ES.json"
+				}
+			} );
+		});
+	</script>
+{% endblock js %}
